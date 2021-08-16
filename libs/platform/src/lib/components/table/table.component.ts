@@ -25,7 +25,7 @@ import {
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, isObservable, merge, Observable, of, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, tap } from 'rxjs/operators';
 
 import { FdDropEvent, RtlService } from '@fundamental-ngx/core/utils';
 import { TableRowDirective } from '@fundamental-ngx/core/table';
@@ -131,7 +131,8 @@ let tableUniqueId = 0;
         '[class.fd-table--condensed]': 'contentDensity === CONTENT_DENSITY.CONDENSED',
         '[class.fd-table--no-horizontal-borders]': 'noHorizontalBorders || noBorders',
         '[class.fd-table--no-vertical-borders]': 'noVerticalBorders || noBorders',
-        '[class.fdp-table--tree]': '_rowsDraggable'
+        '[class.fd-table--tree]': 'isTreeTable',
+        '[class.fd-table--group]': '_isGroupTable'
     }
 })
 export class TableComponent<T = any> extends Table implements AfterViewInit, OnDestroy, OnChanges, OnInit {
@@ -427,6 +428,9 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
     _scrollBarWidth = 0;
 
     /** @hidden */
+    _isGroupTable = false;
+
+    /** @hidden */
     get _isShownSelectionColumn(): boolean {
         return this.selectionMode !== SelectionMode.NONE;
     }
@@ -506,6 +510,8 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
     /** @hidden */
     ngOnInit(): void {
         this._calculateScrollbarWidth();
+
+        this._isGroupTable = this.initialGroupBy?.length > 0;
     }
 
     /** @hidden */
@@ -709,7 +715,6 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
         if (!row) {
             return;
         }
-
 
         if (row.navigatable) {
             row.navigationTarget = target;
@@ -1228,6 +1233,7 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
         this._subscriptions.add(
             this._tableService.columnsChange.subscribe((event: ColumnsChange) => {
                 this._calculateVisibleColumns();
+                this.recalculateTableColumnWidth();
 
                 this.columnsChange.emit(new TableColumnsChangeEvent(this, event.current, event.previous));
             })
@@ -1380,6 +1386,7 @@ export class TableComponent<T = any> extends Table implements AfterViewInit, OnD
     private _buildGroupRulesMap(state = this.getTableState()): void {
         const groupMap = new Map(state.groupBy.map((rule) => [rule.field, rule]));
         this._groupRulesMapSubject.next(groupMap);
+        this._isGroupTable = groupMap.size > 0;
     }
 
     /** @hidden */
