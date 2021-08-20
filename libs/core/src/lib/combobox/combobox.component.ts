@@ -30,8 +30,7 @@ import { FormStates } from '@fundamental-ngx/core/shared';
 import { PopoverComponent } from '@fundamental-ngx/core/popover';
 import { GroupFunction } from '@fundamental-ngx/core/utils';
 import { InputGroupComponent } from '@fundamental-ngx/core/input-group';
-import { KeyUtil } from '@fundamental-ngx/core/utils';
-import { AutoCompleteEvent } from './auto-complete.directive';
+import { KeyUtil, AutoCompleteEvent } from '@fundamental-ngx/core/utils';
 import { MobileModeConfig } from '@fundamental-ngx/core/mobile-mode';
 import { COMBOBOX_COMPONENT, ComboboxInterface } from './combobox.interface';
 import { DynamicComponentService } from '@fundamental-ngx/core/utils';
@@ -461,7 +460,7 @@ export class ComboboxComponent implements ComboboxInterface, ControlValueAccesso
     }
 
     get isEmptyValue(): boolean {
-        return this.inputText.trim().length === 0;
+        return !this.inputText || this.inputText?.trim().length === 0;
     }
 
     /** Get the input text of the input. */

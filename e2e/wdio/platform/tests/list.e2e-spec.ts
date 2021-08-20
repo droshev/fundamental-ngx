@@ -6,15 +6,15 @@ import {
     checkElementTextValue
 } from '../../helper/assertion-helper';
 import {
-    altCompactAttribute,
-    altSelectionAttr,
+    compactClass,
+    ariaMultiSelectable,
     borderStyleAttr,
     compactAttr,
     compactValue,
     itemUnreadStatus,
     lazyLoadAttr,
     listTypeAttr,
-    loadMoreAttr,
+    loadMoreClass,
     multiSelect,
     navIndicator,
     navUrl,
@@ -35,7 +35,7 @@ import {
     getAttributeByName,
     getCSSPropertyByName,
     getCurrentUrl,
-    getElementArrayLength,
+    getElementArrayLength, getElementClass,
     getText,
     isElementClickable,
     refreshPage,
@@ -146,7 +146,7 @@ describe('List test suite:', function() {
         it('should check selection', () => {
             const listItemId = getAttributeByName(singleListItems, 'id');
 
-            expect(getAttributeByName(singleList, altSelectionAttr)).toBe(singleSelect);
+            expect(getAttributeByName(singleList, ariaMultiSelectable)).toBe('false');
             expect(getText(singleToolbar)).toContain(': selected');
             click(singleRadioBtn);
             expect(getText(singleToolbar)).toContain(listItemId + ' : selected');
@@ -155,9 +155,13 @@ describe('List test suite:', function() {
 
     describe('Navigation Indication examples:', function() {
         it('should do basic checks', () => {
+            const navListItemCount = getElementArrayLength(navListItems);
+
             checkElementText(navListItems);
             checkElArrIsClickable(navListItems);
-            checkAttributeValueTrue(navList, navIndicator);
+            for (let i = 0; i < navListItemCount; i++) {
+                expect(getElementClass(navListLink, i)).toContain(navIndicator);
+            }
         });
 
         it('should check navigation', () => {
@@ -196,9 +200,11 @@ describe('List test suite:', function() {
 
     describe('Load Data On Button Click examples:', function() {
         it('should do basic checks', () => {
+            const itemCount = getElementArrayLength(loadListItems);
+
             checkElArrIsClickable(loadListItems);
             checkElementText(loadListItems);
-            checkAttributeValueTrue(loadList, loadMoreAttr);
+            expect(getElementClass(loadListItems, itemCount - 1)).toContain(loadMoreClass)
         });
 
         it('should check loading on click', () => {
@@ -244,16 +250,8 @@ describe('List test suite:', function() {
     describe('With No Data examples:', function() {
         it('should do basic checks and check no data text', () => {
             checkElArrIsClickable(noDataListItems);
-            checkAttributeValueTrue(noDataCompactList, altCompactAttribute);
+            expect(getElementClass(noDataCompactList)).toContain(compactClass)
             checkElementTextValue(noDataListItems, noDataText);
-        });
-    });
-
-    describe('With No Separator examples:', function() {
-        it('should do basic checks and check separator', () => {
-            checkElArrIsClickable(noSepListItems);
-            checkElementText(noSepListItems);
-            checkAttributeValueTrue(noSepList, separatorAttr);
         });
     });
 
@@ -271,7 +269,7 @@ describe('List test suite:', function() {
         });
     });
 
-    describe('Check visual regression', function() {
+    xdescribe('Check visual regression', function() {
         it('should check examples visual regression', () => {
             refreshPage();
             waitForElDisplayed(listPage.title);

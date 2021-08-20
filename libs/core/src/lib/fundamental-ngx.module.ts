@@ -70,7 +70,7 @@ import { SegmentedButtonModule } from '@fundamental-ngx/core/segmented-button';
 import { StepInputModule } from '@fundamental-ngx/core/step-input';
 import { GridListModule } from '@fundamental-ngx/core/grid-list';
 import { IllustratedMessageModule } from '@fundamental-ngx/core/illustrated-message';
-import { MenuModule } from '@fundamental-ngx/core/menu';
+import { MenuModule, MenuMobileModule } from '@fundamental-ngx/core/menu';
 import { TabsModule } from '@fundamental-ngx/core/tabs';
 import { ResizableCardLayoutModule } from '@fundamental-ngx/core/resizable-card-layout';
 
@@ -81,6 +81,7 @@ import { TreeModule } from '@fundamental-ngx/core/tree';
 import { WizardModule } from '@fundamental-ngx/core/wizard';
 import { SplitButtonModule } from '@fundamental-ngx/core/split-button';
 import { SideNavigationModule } from '@fundamental-ngx/core/side-navigation';
+import { MessagePageModule } from '@fundamental-ngx/core/message-page';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -124,6 +125,7 @@ import { SideNavigationModule } from '@fundamental-ngx/core/side-navigation';
         LinkModule,
         ListModule,
         MenuModule,
+        MenuMobileModule,
         DialogModule,
         MessageBoxModule,
         MessageStripModule,
@@ -173,7 +175,8 @@ import { SideNavigationModule } from '@fundamental-ngx/core/side-navigation';
         IllustratedMessageModule,
         StatusIndicatorModule,
         GridListModule,
-        ResizableCardLayoutModule
+        ResizableCardLayoutModule,
+        MessagePageModule
     ],
     providers: []
 })

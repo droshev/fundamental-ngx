@@ -14,7 +14,7 @@ import {
 } from '../../driver/wdio';
 import { emptyValuesArr } from '../fixtures/appData/menu-contents';
 
-describe('Menu tests', function() {
+describe('Menu test suite', function() {
     const menuPage = new MenuPo();
     const {
         menuButtonsArr,
@@ -140,7 +140,7 @@ describe('Menu tests', function() {
         });
     });
 
-    it('should check visual regression for all examples', () => {
+    xit('should check visual regression for all examples', () => {
         menuPage.saveExampleBaselineScreenshot();
         expect(menuPage.compareWithBaseline()).toBeLessThan(5);
     });

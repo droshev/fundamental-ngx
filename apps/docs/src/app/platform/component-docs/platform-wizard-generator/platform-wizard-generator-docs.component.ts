@@ -10,6 +10,9 @@ import * as dialogWizardGeneratorTsExample from '!raw-loader!./examples/wizard-g
 import * as customizableWizardGeneratorHtmlExample from '!raw-loader!./examples/wizard-generator-customizable-example.component.html';
 import * as customizableWizardGeneratorTsExample from '!raw-loader!./examples/wizard-generator-customizable-example.component.ts';
 
+import * as customizableEmbededWizardGeneratorHtmlExample from '!raw-loader!./examples/wizard-generator-customizable-embeded-example.component.html';
+import * as customizableEmbededWizardGeneratorTsExample from '!raw-loader!./examples/wizard-generator-customizable-embeded-example.component.ts';
+
 import * as conditionWizardGeneratorHtmlExample from '!raw-loader!./examples/wizard-generator-condition-example.component.html';
 import * as conditionWizardGeneratorTsExample from '!raw-loader!./examples/wizard-generator-condition-example.component.ts';
 
@@ -18,6 +21,12 @@ import * as responsiveWizardGeneratorTsExample from '!raw-loader!./examples/wiza
 
 import * as responsiveDialogWizardGeneratorHtmlExample from '!raw-loader!./examples/wizard-generator-responsive-dialog-example.component.html';
 import * as responsiveDialogWizardGeneratorTsExample from '!raw-loader!./examples/wizard-generator-responsive-dialog-example.component.ts';
+
+import * as visibleSummaryWizardGeneratorHtmlExample from '!raw-loader!./examples/wizard-generator-visible-summary-example.component.html';
+import * as visibleSummaryWizardGeneratorTsExample from '!raw-loader!./examples/wizard-generator-visible-summary-example.component.ts';
+
+import * as visibleBranchingSummaryWizardGeneratorHtmlExample from '!raw-loader!./examples/wizard-generator-visible-summary-branching-example.component.html';
+import * as visibleBranchingSummaryWizardGeneratorTsExample from '!raw-loader!./examples/wizard-generator-visible-summary-branching-example.component.ts';
 
 @Component({
     selector: 'fdp-platform-wizard-generator-docs',
@@ -67,6 +76,20 @@ export class PlatformWizardGeneratorDocsComponent {
         }
     ];
 
+    customizableEmbededExample: ExampleFile[] = [
+        {
+            language: 'html',
+            code: customizableEmbededWizardGeneratorHtmlExample,
+            fileName: 'wizard-generator-customizable-embeded-example'
+        },
+        {
+            language: 'typescript',
+            code: customizableEmbededWizardGeneratorTsExample,
+            fileName: 'wizard-generator-customizable-embeded-example',
+            component: 'WizardGeneratorCustomizableEmbededExampleComponent'
+        }
+    ];
+
     branchingExample: ExampleFile[] = [
         {
             language: 'html',
@@ -92,6 +115,34 @@ export class PlatformWizardGeneratorDocsComponent {
             code: responsiveWizardGeneratorTsExample,
             fileName: 'wizard-generator-responsive-paddings-example',
             component: 'WizardGeneratorResponsivePaddingsExampleComponent'
+        }
+    ];
+
+    visibleSummaryExample: ExampleFile[] = [
+        {
+            language: 'html',
+            code: visibleSummaryWizardGeneratorHtmlExample,
+            fileName: 'wizard-generator-visible-summary-example'
+        },
+        {
+            language: 'typescript',
+            code: visibleSummaryWizardGeneratorTsExample,
+            fileName: 'wizard-generator-visible-summary-example',
+            component: 'WizardGeneratorVisibleSummaryExampleComponent'
+        }
+    ];
+
+    visibleBranchingSummaryExample: ExampleFile[] = [
+        {
+            language: 'html',
+            code: visibleBranchingSummaryWizardGeneratorHtmlExample,
+            fileName: 'wizard-generator-visible-summary-branching-example'
+        },
+        {
+            language: 'typescript',
+            code: visibleBranchingSummaryWizardGeneratorTsExample,
+            fileName: 'wizard-generator-visible-summary-branching-example',
+            component: 'WizardGeneratorVisibleSummaryBranchingExampleComponent'
         }
     ];
 

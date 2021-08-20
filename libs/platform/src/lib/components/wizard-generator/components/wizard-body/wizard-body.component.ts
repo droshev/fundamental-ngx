@@ -34,7 +34,7 @@ export class WizardBodyComponent implements OnInit, OnDestroy {
      * @description Whether or not apply responsive paddings styling.
      */
     @Input()
-    responsivePaddings = false;
+    responsivePaddings = true;
 
     /**
      * @description Button labels to be used in Wizard navigation
@@ -69,10 +69,10 @@ export class WizardBodyComponent implements OnInit, OnDestroy {
     isLastStep = false;
 
     /**
-     * @description Boolean flag indicating whether or not to append Summary page as the last step.
+     * @description Boolean flag indicating whether or not to display Summary step in Wizard progress bar.
      */
     @Input()
-    addSummary = false;
+    displaySummaryStep = false;
 
     /**
      * User-defined template for "Go Next" button.
@@ -91,6 +91,10 @@ export class WizardBodyComponent implements OnInit, OnDestroy {
      */
     @Input()
     isSummaryStep = false;
+
+    /** If navigation buttons should be visible */
+    @Input()
+    navigationButtons = true;
 
     /**
      * @description Array of visible Wizard Steps.
@@ -176,10 +180,13 @@ export class WizardBodyComponent implements OnInit, OnDestroy {
      * @param index Current step index.
      * @returns {Promise<boolean>} If this step status can be changed.
      */
-    stepClickValidatorFn(index: number): () => Promise<boolean> {
+    stepClickValidatorFn(index: number, step: WizardGeneratorItem): () => Promise<boolean> {
         return async () => {
 
-            if (index === this._wizardGeneratorService.getCurrentStepIndex()) {
+            const currentStepIndex = this._wizardGeneratorService.getCurrentStepIndex();
+            const isSummaryStep = this._visibleItems[currentStepIndex]?.summary === true;
+
+            if (index === currentStepIndex || isSummaryStep) {
                 return true;
             }
 

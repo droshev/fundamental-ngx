@@ -19,24 +19,27 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DOWN_ARROW, TAB, SPACE, ENTER } from '@angular/cdk/keycodes';
+import { Subscription } from 'rxjs';
 import { PopoverComponent } from '@fundamental-ngx/core/popover';
 import { MenuKeyboardService } from '@fundamental-ngx/core/menu';
-import { FormStates } from '@fundamental-ngx/core/shared';
-import { KeyUtil } from '@fundamental-ngx/core/utils';
-import { PopoverFillMode } from '@fundamental-ngx/core/shared';
-import { MultiInputMobileComponent } from './multi-input-mobile/multi-input-mobile.component';
+import { FormStates, PopoverFillMode } from '@fundamental-ngx/core/shared';
 import { MobileModeConfig } from '@fundamental-ngx/core/mobile-mode';
-import { MULTI_INPUT_COMPONENT, MultiInputInterface } from './multi-input.interface';
-import { Subscription } from 'rxjs';
 import { TokenizerComponent } from '@fundamental-ngx/core/token';
 import { ListComponent } from '@fundamental-ngx/core/list';
-import { DOWN_ARROW, TAB, SPACE, ENTER } from '@angular/cdk/keycodes';
-import { ContentDensityService } from '@fundamental-ngx/core/utils';
-import { CssClassBuilder } from '@fundamental-ngx/core/utils';
-import { DynamicComponentService } from '@fundamental-ngx/core/utils';
-import { RtlService } from '@fundamental-ngx/core/utils';
-import { applyCssClass } from '@fundamental-ngx/core/utils';
-import { FocusEscapeDirection } from '@fundamental-ngx/core/utils';
+import {
+    ContentDensityService,
+    CssClassBuilder,
+    DynamicComponentService,
+    RtlService,
+    applyCssClass,
+    FocusEscapeDirection,
+    KeyUtil,
+    FocusTrapService,
+    uuidv4
+} from '@fundamental-ngx/core/utils';
+import { MultiInputMobileComponent } from './multi-input-mobile/multi-input-mobile.component';
+import { MULTI_INPUT_COMPONENT, MultiInputInterface } from './multi-input.interface';
 
 /**
  * Input field with multiple selection enabled. Should be used when a user can select between a
@@ -213,6 +216,10 @@ export class MultiInputComponent implements
     @Input()
     title: string;
 
+    /** Whether the autocomplete should be enabled; Enabled by default */
+    @Input()
+    autoComplete = true;
+
     /** Event emitted when the search term changes. Use *$event* to access the new term. */
     @Output()
     readonly searchTermChange: EventEmitter<string> = new EventEmitter<string>();
@@ -280,7 +287,8 @@ export class MultiInputComponent implements
         private _changeDetRef: ChangeDetectorRef,
         private _dynamicComponentService: DynamicComponentService,
         @Optional() private _rtlService: RtlService,
-        @Optional() private _contentDensityService: ContentDensityService
+        @Optional() private _contentDensityService: ContentDensityService,
+        @Optional() private _focusTrapService: FocusTrapService
     ) { }
 
     /** @hidden */
@@ -302,6 +310,9 @@ export class MultiInputComponent implements
                 this.buildComponentCssClass();
             })
         );
+        if (!this.inputId) {
+            this.inputId = uuidv4();
+        }
     }
 
     /** @hidden */
@@ -408,7 +419,13 @@ export class MultiInputComponent implements
         }
         if (!this.open) {
             this._resetSearchTerm();
+            this.enableParentFocusTrap();
+        } else {
+            this.disableParentFocusTrap();
         }
+
+        this.tokenizer.removeSelectedTokens();
+
         this._changeDetRef.detectChanges();
     }
 
@@ -421,7 +438,7 @@ export class MultiInputComponent implements
     }
 
     /** @hidden */
-    handleSelect(checked: any, value: any, event?: MouseEvent): void {
+    _handleSelect(checked: any, value: any, resetSearch = true, event?: MouseEvent): void {
         if (event) {
             event.preventDefault(); // prevent this function from being called twice when checkbox updates
         }
@@ -429,8 +446,12 @@ export class MultiInputComponent implements
         if (checked) {
             this.selected.push(value);
         } else {
-            // remove the token whose close button was explicitly clicked
-            this.selected.splice(this.selected.indexOf(value), 1);
+            const selectedIndex = this.selected.indexOf(value);
+
+            if (selectedIndex > -1) {
+                // remove the token whose close button was explicitly clicked
+                this.selected.splice(this.selected.indexOf(value), 1);
+            }
         }
 
         // Handle popover placement update
@@ -438,7 +459,9 @@ export class MultiInputComponent implements
             this.popoverRef.refreshPosition();
         }
 
-        this._resetSearchTerm();
+        if (resetSearch) {
+            this._resetSearchTerm();
+        }
 
         this.searchInputElement.nativeElement.focus();
 
@@ -496,7 +519,7 @@ export class MultiInputComponent implements
         if (this.allowNewTokens && this.newTokenValidateFn(this.searchTerm)) {
             const newToken = this.newTokenParseFn(this.searchTerm);
             this.dropdownValues.push(newToken);
-            this.handleSelect(true, newToken);
+            this._handleSelect(true, newToken);
             this._applySearchTermChange('');
             this.open = false;
         }
@@ -536,6 +559,14 @@ export class MultiInputComponent implements
     /** @hidden */
     _addOnButtonClicked(): void {
         this.openChangeHandle(!this.open);
+    }
+
+    disableParentFocusTrap(): void {
+        this._focusTrapService?.pauseCurrentFocusTrap();
+    }
+
+    enableParentFocusTrap(): void {
+        this._focusTrapService?.unpauseCurrentFocusTrap();
     }
 
     /** @hidden */

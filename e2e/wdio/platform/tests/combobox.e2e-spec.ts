@@ -1,10 +1,12 @@
 import {
     browserIsIE,
     clearValue,
-    click, getAttributeByName,
+    click, doesItExist, getAttributeByName,
     getElementArrayLength,
     getText,
     getTextArr,
+    getValue,
+    isElementDisplayed,
     pause,
     refreshPage,
     scrollIntoView,
@@ -13,7 +15,7 @@ import {
     waitForClickable,
     waitForElDisplayed,
     waitForPresent,
-    waitForUnclickable
+    waitForUnclickable,
 } from '../../driver/wdio';
 import { ComboBoxPo } from '../pages/combobox.po';
 import {
@@ -80,7 +82,7 @@ describe('Combobox test suite', function() {
             clearValue(comboBoxInputs(activeTypeNames[i]));
             setValue(comboBoxInputs(activeTypeNames[i]), appleOption.substring(0, 2));
             comboBoxPage.selectOption(activeTypeNames[i], appleOption);
-            waitForElDisplayed(filledComboBoxInputs(activeTypeNames[i], appleOption));
+            expect(getValue(comboBoxInputs(activeTypeNames[i]))).toEqual(appleOption);
         }
     });
 
@@ -103,18 +105,19 @@ describe('Combobox test suite', function() {
         }
         for (let i = 0; i < activeTypeNames.length; i++) {
             comboBoxPage.expandDropdown(activeTypeNames[i]);
+            expect(isElementDisplayed(optionsArray)).toBe(true);
             comboBoxPage.selectOption(activeTypeNames[i], appleOption);
-            expect(optionsArray).not.toBeVisible();
+            expect(doesItExist(optionsArray)).toBe(false);
             comboBoxPage.expandDropdown(activeTypeNames[i]);
             waitForElDisplayed(selectedDropDownOption(appleOption));
             comboBoxPage.selectOption(activeTypeNames[i], bananaOption);
-            expect(optionsArray).not.toBeVisible();
+            expect(doesItExist(optionsArray)).toBe(false);
             comboBoxPage.expandDropdown(activeTypeNames[i]);
             waitForElDisplayed(selectedDropDownOption(bananaOption));
         }
     });
 
-    // Need to debug on different browsers
+    // skipped due to https://github.com/SAP/fundamental-ngx/issues/6248
     xit('Verify option hint when entering first characters', () => {
         for (let i = 0; i < activeTypeNames.length; i++) {
             scrollIntoView(comboBoxInputs(activeTypeNames[i]));
@@ -176,7 +179,7 @@ describe('Combobox test suite', function() {
         }
     });
 
-    describe('Check visual regression', function() {
+    xdescribe('Check visual regression', function() {
         it('should check examples visual regression', () => {
             comboBoxPage.saveExampleBaselineScreenshot();
             expect(comboBoxPage.compareWithBaseline()).toBeLessThan(5);

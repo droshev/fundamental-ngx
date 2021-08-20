@@ -2,7 +2,9 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ContentChild,
     ElementRef,
+    HostListener,
     Renderer2,
     TemplateRef,
     ViewChild,
@@ -19,6 +21,7 @@ import { PopoverFlippedXDirection } from '@fundamental-ngx/core/shared';
 import { KeyUtil } from '@fundamental-ngx/core/utils';
 import { PopoverPosition } from '@fundamental-ngx/core/shared';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { NotificationGroupComponent } from '@fundamental-ngx/core/notification';
 
 /**
  * A component used to enforce a certain layout for the popover.
@@ -41,6 +44,10 @@ export class PopoverBodyComponent {
     /** @hidden */
     @ViewChild(CdkTrapFocus)
     _cdkTrapFocus: CdkTrapFocus;
+
+    /** @hidden */
+    @ContentChild(NotificationGroupComponent)
+    notificationGroup: NotificationGroupComponent;
 
     /** Whether the popover should have an arrow. */
     _noArrow = true;
@@ -84,6 +91,16 @@ export class PopoverBodyComponent {
     /** Close event from popover body */
     onClose = new Subject<void>();
 
+    /** Handler escape keydown */
+    @HostListener('keyup', ['$event'])
+    bodyKeyupHandler(event: KeyboardEvent): void {
+        if (KeyUtil.isKeyCode(event, ESCAPE) && this._closeOnEscapeKey) {
+            // In case if popover belongs to the element inside dialog
+            event.stopPropagation();
+            this.onClose.next();
+        }
+    }
+
     constructor(
         readonly _elementRef: ElementRef,
         private _changeDetectorRef: ChangeDetectorRef,
@@ -114,16 +131,11 @@ export class PopoverBodyComponent {
         this.detectChanges();
     }
 
-    /** Handler escape keydown */
-    bodyKeydownHandler(event: KeyboardEvent): void {
-        if (KeyUtil.isKeyCode(event, ESCAPE) && this._closeOnEscapeKey) {
-            this.onClose.next();
-        }
-    }
-
     /** @hidden */
     detectChanges(): void {
-        this._changeDetectorRef.detectChanges();
+        if (!this._changeDetectorRef['destroyed']) {
+            this._changeDetectorRef.detectChanges();
+        }
     }
 
     /** @hidden */

@@ -292,7 +292,7 @@ describe('Radio button group  Test Suite', function() {
         }
     });
 
-    it('Verify platform radio buttons Passed as content projection and some radio buttons are disabled', () => {
+    xit('Verify platform radio buttons Passed as content projection and some radio buttons are disabled', () => {
         scrollIntoView(radioButtonInputByIndex(radioButtonWithSomeDisabledButtons));
         expect(getAttributeByName(radioButtonInputByIndex(radioButtonWithSomeDisabledButtons)
             , ngReflectIsDisabled, 2)).toBe('true');

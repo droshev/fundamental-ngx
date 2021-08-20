@@ -57,7 +57,7 @@ describe('Verify Feed Input component', function() {
     });
 
     it('should have example with default avatar assigned', () => {
-        expect(getAttributeByName(feedInputAvatar, 'ng-reflect-glyph', 1)).toContain(default_avatar);
+        expect(getAttributeByName(feedInputAvatar, 'glyph', 1)).toContain(default_avatar);
     });
 
     it('should have example with no avatar', () => {
@@ -140,7 +140,7 @@ describe('Verify Feed Input component', function() {
         feedInputPage.checkRtlSwitch();
     });
 
-    describe('Should check visual regression', function() {
+    xdescribe('Should check visual regression', function() {
 
         it('should check examples visual regression', () => {
             feedInputPage.saveExampleBaselineScreenshot();

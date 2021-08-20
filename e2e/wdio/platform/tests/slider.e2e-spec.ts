@@ -7,7 +7,7 @@ import {
     doesItExist,
     elementDisplayed,
     getAttributeByName,
-    getElementArrayLength,
+    getElementArrayLength, getElementClass,
     getText,
     mouseHoverElement,
     refreshPage,
@@ -15,7 +15,7 @@ import {
     sendKeys,
     waitForElDisplayed
 } from '../../driver/wdio';
-import { cozyAttribute, disabledAttribute, tickAttribute, tickLabelAttribute } from '../fixtures/appData/slider-content'
+import { densityAttribute, disabledAttribute, tickAttribute, tickLabelAttribute } from '../fixtures/appData/slider-content'
 
 describe('slider test suite', function() {
     const sliderPage = new SliderPo();
@@ -24,7 +24,7 @@ describe('slider test suite', function() {
         sliderLabels, customExamples, rangeExamples, disabledExamples, cozyExamples, playgroundExamples,
         sliderTypeMenu, sliderTypeOptions, sliderInput, firstSliderLabel, lastSliderLabel, secondSliderLabel,
         progressTracker, inputCheckboxes, sliderTicks, sliderTooltipInput, sliderTooltipInputFF, formFieldExamples,
-        formValueLabels
+        formValueLabels, altSliderAttr
     } = sliderPage;
 
     beforeAll(() => {
@@ -73,18 +73,6 @@ describe('slider test suite', function() {
         });
     });
 
-    describe('tick marks and labels examples', function() {
-        it('should check tick marks', () => {
-            scrollIntoView(ticksAndLabelsExamples);
-            expect(getAttributeByName(ticksAndLabelsExamples + sliderAttr, tickAttribute)).toEqual('true');
-        });
-
-        it('should check tick mark labels', () => {
-            expect(getAttributeByName(ticksAndLabelsExamples + sliderAttr, tickLabelAttribute, 1)).toEqual('true');
-            expect(elementDisplayed(ticksAndLabelsExamples + sliderLabels)).toBe(true);
-        });
-    });
-
     describe('custom value examples', function() {
         it('should check custom slider values', () => {
             scrollIntoView(customExamples);
@@ -101,8 +89,9 @@ describe('slider test suite', function() {
             const startMinValue = startValuesArr[0];
             const startMaxValue = startValuesArr[1];
 
-            clickAndMoveElement(rangeExamples + sliderHandles, -50, 0);
-            clickAndMoveElement(rangeExamples + sliderHandles, 50, 0, 1);
+            clickAndMoveElement(rangeExamples + sliderHandles, -75, 0);
+            scrollIntoView(rangeExamples);
+            clickAndMoveElement(rangeExamples + sliderHandles, 75, 0, 1);
             const endValuesArr = getText(rangeExamples + valueLabels).split('\n');
             const endMinValue = endValuesArr[0];
             const endMaxValue = endValuesArr[1];
@@ -145,14 +134,14 @@ describe('slider test suite', function() {
     describe('disabled examples', function() {
         it('should check range slider is disabled', () => {
             scrollIntoView(disabledExamples);
-            expect(getAttributeByName(disabledExamples + sliderAttr, disabledAttribute)).toBe('true');
+            expect(getElementClass(disabledExamples + sliderAttr)).toContain('is-disabled');
         });
     });
 
     describe('cozy examples', function() {
         it('should check cozy property', () => {
             scrollIntoView(cozyExamples);
-            expect(getAttributeByName(cozyExamples + sliderAttr, cozyAttribute)).toBe('true');
+            expect(getAttributeByName(cozyExamples + altSliderAttr, densityAttribute)).toBe('cozy');
         });
 
         it('should check cozy slider', () => {
@@ -227,7 +216,7 @@ describe('slider test suite', function() {
         });
     });
 
-    describe('visual regression', function() {
+    xdescribe('visual regression', function() {
         beforeEach(() => {
             refreshPage();
         }, 1);
