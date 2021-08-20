@@ -1,5 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { ApprovalNode, PlatformApprovalFlowModule } from '@fundamental-ngx/platform';
 
 import { ApprovalFlowNodeComponent } from './approval-flow-node.component';
@@ -27,7 +28,6 @@ describe('ApprovalFlowNodeComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ApprovalFlowNodeComponent],
             imports: [PlatformApprovalFlowModule]
         }).compileComponents();
     });
@@ -58,15 +58,15 @@ describe('ApprovalFlowNodeComponent', () => {
         fixture.detectChanges();
         detectChangesOnPush();
 
-        expect(fixture.nativeElement).toHaveClass('approval-flow-node--blank');
+        expect(fixture.nativeElement).toHaveClass('fdp-approval-flow-node--blank');
     });
 
     it('should toggle line-before & line-after classes', () => {
         fixture.detectChanges();
         detectChangesOnPush();
 
-        expect(fixture.nativeElement).toHaveClass('approval-flow-node--line-before');
-        expect(fixture.nativeElement).toHaveClass('approval-flow-node--line-after');
+        expect(fixture.nativeElement).toHaveClass('fdp-approval-flow-node--line-before');
+        expect(fixture.nativeElement).toHaveClass('fdp-approval-flow-node--line-after');
 
         component.node = {
             ...component.node,
@@ -76,8 +76,8 @@ describe('ApprovalFlowNodeComponent', () => {
         fixture.detectChanges();
         detectChangesOnPush();
 
-        expect(fixture.nativeElement).not.toHaveClass('approval-flow-node--line-before');
-        expect(fixture.nativeElement).not.toHaveClass('approval-flow-node--line-after');
+        expect(fixture.nativeElement).not.toHaveClass('fdp-approval-flow-node--line-before');
+        expect(fixture.nativeElement).not.toHaveClass('fdp-approval-flow-node--line-after');
     });
 
     it('should render arrow when arrow option set to true', () => {
@@ -86,7 +86,7 @@ describe('ApprovalFlowNodeComponent', () => {
         fixture.detectChanges();
         detectChangesOnPush();
 
-        expect(fixture.nativeElement.querySelector('.approval-flow-node__arrow')).toBeTruthy();
+        expect(fixture.nativeElement.querySelector('.fdp-approval-flow-node__arrow')).toBeTruthy();
     });
 
     it('should have approved class when node is approved', () => {
@@ -98,7 +98,7 @@ describe('ApprovalFlowNodeComponent', () => {
         fixture.detectChanges();
         detectChangesOnPush();
 
-        expect(fixture.nativeElement).toHaveClass('approval-flow-node--approved');
+        expect(fixture.nativeElement).toHaveClass('fdp-approval-flow-node--approved');
     });
 
     it('should add parent-approved class if parent node is approved', () => {
@@ -113,7 +113,7 @@ describe('ApprovalFlowNodeComponent', () => {
         fixture.detectChanges();
         detectChangesOnPush();
 
-        expect(fixture.nativeElement).toHaveClass('approval-flow-node--parent-approved');
+        expect(fixture.nativeElement).toHaveClass('fdp-approval-flow-node--parent-approved');
     });
 
     it('should have positive object status when node is approved', () => {

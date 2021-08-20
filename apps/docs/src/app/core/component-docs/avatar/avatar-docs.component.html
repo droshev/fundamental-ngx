@@ -12,7 +12,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-initials" componentName="avatar">
+<fd-docs-section-title id="initials" componentName="avatar">
     Initials
 </fd-docs-section-title>
 <description>
@@ -25,7 +25,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-circle" componentName="avatar">
+<fd-docs-section-title id="circle" componentName="avatar">
     Circle
 </fd-docs-section-title>
 <description>
@@ -38,7 +38,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-background-image" componentName="avatar">
+<fd-docs-section-title id="background-image" componentName="avatar">
     Background Image
 </fd-docs-section-title>
 <description>
@@ -53,7 +53,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-transparent" componentName="avatar">
+<fd-docs-section-title id="transparent" componentName="avatar">
     Transparent
 </fd-docs-section-title>
 <description>
@@ -66,7 +66,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-placeholder" componentName="avatar">
+<fd-docs-section-title id="placeholder" componentName="avatar">
     Placeholder Background
 </fd-docs-section-title>
 <description>
@@ -82,7 +82,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-tile" componentName="avatar">
+<fd-docs-section-title id="tile" componentName="avatar">
     Tile Icon Background
 </fd-docs-section-title>
 <description>
@@ -95,7 +95,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-accent-colors" componentName="avatar">
+<fd-docs-section-title id="accent-colors" componentName="avatar">
     Accent Colors
 </fd-docs-section-title>
 <description>
@@ -109,7 +109,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-zoom-icon" componentName="avatar">
+<fd-docs-section-title id="zoom-icon" componentName="avatar">
     Zoom Icon
 </fd-docs-section-title>
 <description>
@@ -122,7 +122,7 @@
 
 <separator></separator>
 
-<fd-docs-section-title id="avatar-border" componentName="avatar">
+<fd-docs-section-title id="border" componentName="avatar">
     Borders
 </fd-docs-section-title>
 <description>
@@ -132,3 +132,33 @@
     <fd-avatar-borders-example></fd-avatar-borders-example>
 </component-example>
 <code-example [exampleFiles]="avatarBorders"></code-example>
+
+<separator></separator>
+
+<fd-docs-section-title id="default-image-alter-options" componentName="avatar">
+    Default image with alter icon options
+</fd-docs-section-title>
+<description>
+    To provide alternative icon options by priority use the <code>[alterIcon]</code> property. <br>
+    There's few options can be set the order priority, Avatar component will process them and display first successful option if <code>[image]</code> url fails to load:
+    <ul>
+        <li>
+            <code>content</code> - Avatar will display first letter from string, provided as component content
+        </li>
+        <li>
+            <code>alt</code> - Avatar will display first letter from string, provided as <code>alt</code> attribute
+        </li>
+        <li>
+            <code>backup</code> - Avatar will display image, provided as <code>backupImage</code>
+        </li>
+        <li>
+            <code>default-icon</code> - Avatar will display user glyph icon
+        </li>
+    </ul>
+    <br>
+    Alternative options can be passed the following way <code>alterIcon="content|alt|backup|default-icon"</code>
+</description>
+<component-example>
+    <fd-avatar-background-image-with-alter-options-example></fd-avatar-background-image-with-alter-options-example>
+</component-example>
+<code-example [exampleFiles]="avatarBackgroundImageWithALterOptions"></code-example>

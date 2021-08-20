@@ -1,29 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+
 import { PlatformApprovalFlowModule } from '@fundamental-ngx/platform';
 
 import { SelectionChangeEvent } from '../../list/list.component';
-import { PlatformListModule } from '../../list/list.module';
-import { StandardListItemModule } from '../../list/public_api';
 import { ApprovalUser } from '../interfaces';
 import { ApprovalFlowUserListComponent } from './approval-flow-user-list.component';
 
 
-describe('ApprovalFlowTeamListComponent', () => {
+describe('ApprovalFlowUserListComponent', () => {
     let component: ApprovalFlowUserListComponent;
     let fixture: ComponentFixture<ApprovalFlowUserListComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ApprovalFlowUserListComponent],
-            imports: [
-                RouterModule,
-                RouterTestingModule,
-                PlatformApprovalFlowModule,
-                PlatformListModule,
-                StandardListItemModule
-            ]
+            imports: [PlatformApprovalFlowModule]
         }).compileComponents();
     });
 
@@ -37,17 +27,18 @@ describe('ApprovalFlowTeamListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should preselect users', () => {
+    it('should preselect users', async () => {
         const approvalUsers: ApprovalUser[] = [{
             id: 'id1',
             name: 'name1'
         }];
 
         component.users = approvalUsers;
-        component.selectedUsers = approvalUsers;
+        await fixture.whenStable();
 
+        component.selectedUsers = approvalUsers;
         fixture.detectChanges();
-        
+
         component.ngAfterViewInit();
 
         expect(component._selectedItems.length).toEqual(approvalUsers.length);

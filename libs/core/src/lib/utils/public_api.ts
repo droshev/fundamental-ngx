@@ -9,6 +9,8 @@ export * from './directives/initial-focus/initial-focus.directive';
 export * from './directives/line-clamp/line-clamp.module';
 export * from './directives/line-clamp/line-clamp.directive';
 export * from './directives/initial-focus/initial-focus.module';
+export * from './directives/auto-complete/auto-complete.directive';
+export * from './directives/auto-complete/auto-complete.module';
 
 export * from './pipes/pipe.module';
 export * from './pipes/list-group.pipe';
@@ -53,3 +55,5 @@ export * from './abstract-fd-ngx-class';
 export * from './list-item/list-item-utils';
 
 export * from './mixins/apply-mixin';
+
+export * from './services/focus-trap.service';

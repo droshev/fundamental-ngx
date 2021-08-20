@@ -122,7 +122,7 @@ describe('Time-picker component test', function () {
         timePickerPage.checkRtlSwitch();
     })
 
-    it('should check visual regression for all examples', () => {
+    xit('should check visual regression for all examples', () => {
         timePickerPage.saveExampleBaselineScreenshot();
         expect(timePickerPage.compareWithBaseline()).toBeLessThan(5);
     })
@@ -173,7 +173,7 @@ describe('Time-picker component test', function () {
         sendKeys('Enter');
 
         if (section === formattingExample) {
-            expect(getValue(section + timeInput)).toEqual('00:34:00');
+            expect(getValue(section + timeInput)).toEqual(`${value}`);
         }
         if (section !== formattingExample) {
             expect(getValue(section + timeInput)).toEqual(`${value}`);
