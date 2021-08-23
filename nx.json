@@ -12,6 +12,12 @@
   },
   "tasksRunnerOptions": {
     "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    },
+    "cloud": {
       "runner": "@nrwl/nx-cloud",
       "options": {
         "strictlyOrderedTargets": [
@@ -136,7 +142,7 @@
         "fdp"
       ],
       "implicitDependencies": ["core"]
-    }, 
+    },
     "moment-adapter": {
       "tags": [
         "fd"
