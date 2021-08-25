@@ -61,6 +61,10 @@ export class BaseButton {
     @Input()
     fdMenu = false;
 
+    /** adding native aria-label to the component */
+    @Input()
+    ariaLabel: string = null;
+
     /**
      * Native disabled attribute of button element
      */
