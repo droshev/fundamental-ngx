@@ -35,7 +35,7 @@ export class BaseButton {
      * Default value is set to ''.
      */
     @Input()
-    glyph = '';
+    glyph: string = null;
 
     /** Whether to apply compact mode to the button. */
     @Input()
