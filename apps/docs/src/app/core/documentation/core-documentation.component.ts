@@ -94,6 +94,7 @@ export class CoreDocumentationComponent extends DocumentationBaseComponent {
             { url: 'core/grid-list', name: 'Grid List' },
             { url: 'core/slider', name: 'Slider' },
             { url: 'core/timeline', name: 'Timeline' },
+            { url: 'core/splitter', name: 'Splitter' }
         ];
 
         this.layouts = [
