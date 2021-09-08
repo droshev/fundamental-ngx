@@ -14,8 +14,7 @@ const INLINE_HELP_CLASS = 'fd-inline-help__content';
     providers: [PopoverService],
     host: {
         '[class.fd-inline-help__trigger]': 'true',
-        '[attr.aria-label]': 'placement !== null ? inlineAriaLabel !== null ? placement +","+inlineAriaLabel : placement +","+inlineHelpText : inlineHelpText',
-        role: 'tooltip'
+        '[attr.aria-label]': 'placement !== null ? inlineAriaLabel !== null ? placement +","+inlineAriaLabel : placement +","+inlineHelpText : inlineHelpText'
     }
 })
 export class InlineHelpDirective extends BasePopoverClass implements OnInit, OnChanges {
