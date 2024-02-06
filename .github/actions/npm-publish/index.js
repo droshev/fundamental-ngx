@@ -16,6 +16,7 @@ async function publish({ currentTryNumber = 1, packageJsonPath, tag, token, acce
             await publish({
                 currentTryNumber: currentTryNumber + 1,
                 packageJsonPath,
+                dryRun: true,
                 tag,
                 token,
                 access

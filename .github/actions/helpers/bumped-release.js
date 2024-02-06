@@ -47,6 +47,7 @@ module.exports = ({ prereleaseRequested, currentVersion }) => {
                 tagPrefix: 'v'
             },
             (err, release) => {
+                console.log('>>>>>>>>>>>> ', release);
                 if (err) {
                     return reject(err);
                 }
