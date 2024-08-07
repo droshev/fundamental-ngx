@@ -10317,10 +10317,10 @@ functions-have-names@^1.2.2, functions-have-names@^1.2.3:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.3.tgz#0404fe4ee2ba2f607f0e0ec3c80bae994133b834"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-fundamental-styles@0.37.5-rc.5:
-  version "0.37.5-rc.5"
-  resolved "https://registry.yarnpkg.com/fundamental-styles/-/fundamental-styles-0.37.5-rc.5.tgz#dc19cad1921f51ddc1ba6513ff1fd9e626db8127"
-  integrity sha512-YnQPQe60GLI3RC8DpU79rowEHVCUzp5/a53uh8bM62fYXcNQFHobEWeYiluJPx982Vj8XLlotDd8sZ1QSNGCmA==
+fundamental-styles@0.37.5-rc.7:
+  version "0.37.5-rc.7"
+  resolved "https://registry.yarnpkg.com/fundamental-styles/-/fundamental-styles-0.37.5-rc.7.tgz#5292f6a73c3479aa1865b047203a06bfb2156b61"
+  integrity sha512-K19z0T4P92sS47IzFbCsVzwS418N/q3UDnc86QfMlmGufmzcUwNNBDKdFrVoQxGVhvJ1xIGv0y8S+cxfQu5iaw==
 
 fuse.js@7.0.0:
   version "7.0.0"
